@@ -23,6 +23,5 @@ C_DEPS :=
 SUBDIRS := \
 . \
 MP_SSD1306 \
-BMP \
 1Wire \
 

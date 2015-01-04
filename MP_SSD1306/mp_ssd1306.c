@@ -16,12 +16,12 @@ BSD license, check license.txt for more information
 All text above, and the splash screen below must be included in any redistribution
 *********************************************************************
 **
- * z szczególnymi podziêkowaniami Mirkowi Kardaœ
+ * ze szczególnymi podziêkowaniami Mirkowi Kardaœ
  *
  * mp_ssd1306.c
  *
  *  Created on: 20 gru 2014
- *      Author: mszewczyk
+ *      Author: Marcin
  */
 
 #include <avr/io.h>

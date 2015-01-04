@@ -1,5 +1,5 @@
 /*                  e-gadget.header
- * main.c
+ * fun.h
  *
  *  Created on: 2015-01-04
  *    Modyfied: 2015-01-04 12:59:07
@@ -26,41 +26,20 @@
  *
  */
 
+#ifndef FUN_H_
+#define FUN_H_
 
-#include <avr/io.h>
-#include <avr/pgmspace.h>
-#include <util/delay.h>
-#include <string.h>
-#include <stdlib.h>
-#include <avr/interrupt.h>
 
-#include "1Wire/ds18x20.h"
-#include "MP_SSD1306/mp_ssd1306.h"
-
-#include "fun.h"
+// definicje dla preprocesora
+#define WVALVE_PIN (1<<PB1)								// definicja pinu do którego pod³¹czona jest elektrozawor wody
+#define WVALVE_ON PORTB &= ~WVALVE_PIN		// makrodefinicja – za³¹czenie elektrozaworu wody
+#define WVALVE_OFF PORTB |= WVALVE_PIN		// makrodefinicja – wy³¹czenie elektrozaworu wody
 
 
 
-// poni¿sz¹ linijkê czasami trzeba wpisaæ w eclipse przed definicjami
-// zmiennych w pamiêci EEPROM, ¿eby nie podkreœla³ sk³adni jako b³êdnej
-#define EEMEM __attribute__((section(".eeprom")))
 
+void mp_rinse (uint8_t r_time);												// czas w sekundach
 
-int main(void){
-
-	mp_ssd1306_init(SSD1306_SWITCHCAPVCC, REFRESH_MAX,0);
-	mp_ssd1306_cmd(0x81);	//kontrast na min
-	mp_ssd1306_cmd(0);
-
-
-
-//	mp_rinse (90);
-
-	while(1){
-
-	        }
-}
-
-
+#endif /* FUN_H_ */
 
 
