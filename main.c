@@ -36,7 +36,6 @@
 
 #include "1Wire/ds18x20.h"
 #include "MP_SSD1306/mp_ssd1306.h"
-
 #include "fun.h"
 
 
@@ -48,10 +47,10 @@
 
 int main(void){
 
-	mp_ssd1306_init(SSD1306_SWITCHCAPVCC, REFRESH_MAX,0);
-	mp_ssd1306_cmd(0x81);	//kontrast na min
-	mp_ssd1306_cmd(0);
-
+		mp_ssd1306_init(SSD1306_SWITCHCAPVCC, REFRESH_MAX, 0);
+//	mp_ssd1306_cmd(0x81);	//kontrast na min
+//	mp_ssd1306_cmd(0);
+		mp_ssd1306_display();
 
 
 //	mp_rinse (90);

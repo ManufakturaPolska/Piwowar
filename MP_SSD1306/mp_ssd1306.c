@@ -33,414 +33,335 @@ All text above, and the splash screen below must be included in any redistributi
 #include "mp_ssd1306.h"
 
 
-uint8_t ssd1306_buf[BUF_SIZE]= {
-                //static uint8_t buffer[SSD1306_LCDHEIGHT * SSD1306_LCDWIDTH / 8] = {
-        /*      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80,
-                0x80, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                0x00, 0x80, 0x80, 0xC0, 0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0x80, 0xC0, 0xE0, 0xF0, 0xF8, 0xFC, 0xF8, 0xE0, 0x00, 0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x80, 0x80,
-                0x80, 0x80, 0x00, 0x80, 0x80, 0x00, 0x00, 0x00, 0x00, 0x80, 0x80, 0x80, 0x80, 0x80, 0x00, 0xFF,
-                #if (SSD1306_LCDHEIGHT * SSD1306_LCDWIDTH > 96*16)
-                0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x80, 0x80, 0x80, 0x80, 0x00, 0x00, 0x80, 0x80, 0x00, 0x00,
-                0x80, 0xFF, 0xFF, 0x80, 0x80, 0x00, 0x80, 0x80, 0x00, 0x80, 0x80, 0x80, 0x80, 0x00, 0x80, 0x80,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x80, 0x00, 0x00, 0x8C, 0x8E, 0x84, 0x00, 0x00, 0x80, 0xF8,
-                0xF8, 0xF8, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                0xF0, 0xF0, 0xF0, 0xF0, 0xF0, 0xF0, 0xF0, 0xF0, 0xF0, 0xF0, 0xF0, 0xF0, 0xE0, 0xE0, 0xC0, 0x80,
-                0x00, 0xE0, 0xFC, 0xFE, 0xFF, 0xFF, 0xFF, 0x7F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFE, 0xFF, 0xC7, 0x01, 0x01,
-                0x01, 0x01, 0x83, 0xFF, 0xFF, 0x00, 0x00, 0x7C, 0xFE, 0xC7, 0x01, 0x01, 0x01, 0x01, 0x83, 0xFF,
-                0xFF, 0xFF, 0x00, 0x38, 0xFE, 0xC7, 0x83, 0x01, 0x01, 0x01, 0x83, 0xC7, 0xFF, 0xFF, 0x00, 0x00,
-                0x01, 0xFF, 0xFF, 0x01, 0x01, 0x00, 0xFF, 0xFF, 0x07, 0x01, 0x01, 0x01, 0x00, 0x00, 0x7F, 0xFF,
-                0x80, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0x7F, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x01, 0xFF,
-                0xFF, 0xFF, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                0x03, 0x0F, 0x3F, 0x7F, 0x7F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xE7, 0xC7, 0xC7, 0x8F,
-                0x8F, 0x9F, 0xBF, 0xFF, 0xFF, 0xC3, 0xC0, 0xF0, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFC, 0xFC, 0xFC,
-                0xFC, 0xFC, 0xFC, 0xFC, 0xFC, 0xF8, 0xF8, 0xF0, 0xF0, 0xE0, 0xC0, 0x00, 0x01, 0x03, 0x03, 0x03,
-                0x03, 0x03, 0x01, 0x03, 0x03, 0x00, 0x00, 0x00, 0x00, 0x01, 0x03, 0x03, 0x03, 0x03, 0x01, 0x01,
-                0x03, 0x01, 0x00, 0x00, 0x00, 0x01, 0x03, 0x03, 0x03, 0x03, 0x01, 0x01, 0x03, 0x03, 0x00, 0x00,
-                0x00, 0x03, 0x03, 0x00, 0x00, 0x00, 0x03, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01,
-                0x03, 0x03, 0x03, 0x03, 0x03, 0x01, 0x00, 0x00, 0x00, 0x01, 0x03, 0x01, 0x00, 0x00, 0x00, 0x03,
-                0x03, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                #if (SSD1306_LCDHEIGHT == 64)
-                0x00, 0x00, 0x00, 0x80, 0xC0, 0xE0, 0xF0, 0xF9, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x3F, 0x1F, 0x0F,
-                0x87, 0xC7, 0xF7, 0xFF, 0xFF, 0x1F, 0x1F, 0x3D, 0xFC, 0xF8, 0xF8, 0xF8, 0xF8, 0x7C, 0x7D, 0xFF,
-                0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x7F, 0x3F, 0x0F, 0x07, 0x00, 0x30, 0x30, 0x00, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0xFE, 0xFE, 0xFC, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xE0, 0xC0, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x30, 0x30, 0x00, 0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                0x00, 0xC0, 0xFE, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x7F, 0x7F, 0x3F, 0x1F,
-                0x0F, 0x07, 0x1F, 0x7F, 0xFF, 0xFF, 0xF8, 0xF8, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFE, 0xF8, 0xE0,
-                0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFE, 0xFE, 0x00, 0x00,
-                0x00, 0xFC, 0xFE, 0xFC, 0x0C, 0x06, 0x06, 0x0E, 0xFC, 0xF8, 0x00, 0x00, 0xF0, 0xF8, 0x1C, 0x0E,
-                0x06, 0x06, 0x06, 0x0C, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0xFE, 0xFE, 0x00, 0x00, 0x00, 0x00, 0xFC,
-                0xFE, 0xFC, 0x00, 0x18, 0x3C, 0x7E, 0x66, 0xE6, 0xCE, 0x84, 0x00, 0x00, 0x06, 0xFF, 0xFF, 0x06,
-                0x06, 0xFC, 0xFE, 0xFC, 0x0C, 0x06, 0x06, 0x06, 0x00, 0x00, 0xFE, 0xFE, 0x00, 0x00, 0xC0, 0xF8,
-                0xFC, 0x4E, 0x46, 0x46, 0x46, 0x4E, 0x7C, 0x78, 0x40, 0x18, 0x3C, 0x76, 0xE6, 0xCE, 0xCC, 0x80,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0x01, 0x07, 0x0F, 0x1F, 0x1F, 0x3F, 0x3F, 0x3F, 0x3F, 0x1F, 0x0F, 0x03,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0F, 0x0F, 0x00, 0x00,
-                0x00, 0x0F, 0x0F, 0x0F, 0x00, 0x00, 0x00, 0x00, 0x0F, 0x0F, 0x00, 0x00, 0x03, 0x07, 0x0E, 0x0C,
-                0x18, 0x18, 0x0C, 0x06, 0x0F, 0x0F, 0x0F, 0x00, 0x00, 0x01, 0x0F, 0x0E, 0x0C, 0x18, 0x0C, 0x0F,
-                0x07, 0x01, 0x00, 0x04, 0x0E, 0x0C, 0x18, 0x0C, 0x0F, 0x07, 0x00, 0x00, 0x00, 0x0F, 0x0F, 0x00,
-                0x00, 0x0F, 0x0F, 0x0F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0F, 0x0F, 0x00, 0x00, 0x00, 0x07,
-                0x07, 0x0C, 0x0C, 0x18, 0x1C, 0x0C, 0x06, 0x06, 0x00, 0x04, 0x0E, 0x0C, 0x18, 0x0C, 0x0F, 0x07,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-                #endif
-                #endif  */
-                };
+uint8_t ssd1306_buf [ BUF_SIZE ]= {
 
-#if USE_CS2==1
+};
+
+#if USE_CS2 == 1
 uint8_t display_nr;
 #endif
 
-#if USE_SPI_OR_I2C==1
-static void SPIwrite(uint8_t dat){
+#if USE_SPI_OR_I2C == 1
 
+static void SPIwrite ( uint8_t dat ) {
         uint8_t i;
-        for (i=0x80 ; i ; i >>=1){
+        for ( i=0x80 ; i ; i >>=1 ) {
                 SCK_LO;
-                if (dat & i)
-                        MOSI_HI;
-                else
-                        MOSI_LO;
-                SCK_HI;
+                if ( dat & i ) MOSI_HI;
+                else MOSI_LO; SCK_HI;
         }
 }
 
+void ssd1306_InitSpi (void) {
 
-void ssd1306_InitSpi(void){
+        MOSI_DDR 	|= MOSI;
+        SCK_DDR 		|= SCK;
+        SCK_PORT 	|= SCK;
 
-        MOSI_DDR |= MOSI;
-        MOSI_PORT |= MOSI;//moje
-
-        SCK_DDR |= SCK;
-        SCK_PORT |= SCK;
-
-#if USE_RST==1
-        RST_DDR |= RST;
-        RST_PORT |= RST;
-#endif
-        DC_DDR |=DC;
-        DC_PORT|= DC; //moje
-#if USE_CS==1
-        CS_DDR |= CS;
-        CS_PORT |= CS;
+#if USE_RST == 1
+        RST_DDR 		|= RST;
+        RST_PORT 	|= RST;
 #endif
 
-#if USE_CS2==1
-        CS2_DDR |= CS2;
-        CS2_PORT |= CS2;
+        DC_DDR 		|=DC;
+
+#if USE_CS == 1
+        CS_DDR 		|= CS;
+        CS_PORT 		|= CS;
+#endif
+
+#if USE_CS2 == 1
+        CS2_DDR 		|= CS2;
+        CS2_PORT 	|= CS2;
 #endif
 
 }
 #endif
 
 //***********I2C*****************
-#if USE_SPI_OR_I2C==0
-void i2cSetBitrate(uint16_t bitrateKHz) {
+#if USE_SPI_OR_I2C == 0
+
+void i2cSetBitrate ( uint16_t bitrateKHz ) {
         uint8_t bitrate_div;
 
-        bitrate_div = ((F_CPU/1000l)/bitrateKHz);
-        if(bitrate_div >= 16)
-                bitrate_div = (bitrate_div-16)/2;
+        bitrate_div = (( F_CPU/1000l)/bitrateKHz );
+        if ( bitrate_div >= 16 )
+                bitrate_div = ( bitrate_div-16 ) / 2;
 
         TWBR = bitrate_div;
 }
 
-void TWI_start(void) {
-        TWCR = (1<<TWINT)|(1<<TWEN)|(1<<TWSTA);
-        while (!(TWCR&(1<<TWINT)));
+void TWI_start (void) {
+        TWCR = ( 1<<TWINT ) | ( 1<<TWEN ) | ( 1<<TWSTA );
+        while ( ! ( TWCR&(1<<TWINT )));
 }
 
-static void TWI_stop(void){
-        TWCR= (1<<TWINT)|(1<<TWEN)|(1<<TWSTO);
-        while ((TWCR & (1<<TWSTO)));
+static void TWI_stop (void) {
+        TWCR = ( 1<<TWINT ) | ( 1<<TWEN ) | ( 1<<TWSTO );
+        while (( TWCR & ( 1<<TWSTO )));
 }
 
-static void TWI_write(uint8_t bajt){
-        TWDR= bajt;
-        TWCR= (1<<TWINT)|(1<<TWEN);
-        while (!(TWCR & (1<<TWINT)));
+static void TWI_write ( uint8_t bajt ) {
+        TWDR = bajt;
+        TWCR = ( 1<<TWINT ) | ( 1<<TWEN );
+        while ( !( TWCR & ( 1<<TWINT )));
 }
 
-static void TWI_write_buf(uint8_t SLA, uint8_t adr, uint16_t len, uint8_t *buf){
-        TWI_start();
-        TWI_write(SLA);
-        TWI_write(adr);
-        while (len--)TWI_write(*buf++);
-        TWI_stop();
+static void TWI_write_buf ( uint8_t SLA, uint8_t adr, uint16_t len, uint8_t *buf ) {
+        TWI_start ();
+        TWI_write ( SLA );
+        TWI_write ( adr );
+        while (len--) TWI_write ( *buf++ );
+        TWI_stop ();
 }
 #endif
 
-//****************koniec I2C************************
+void mp_ssd1306_cmd ( uint8_t cmd ) {
 
+#if USE_SPI_OR_I2C == 1
 
-//************wyœlij komendê***************
-void mp_ssd1306_cmd( uint8_t cmd){
-
-#if USE_SPI_OR_I2C==1
-
-#if USE_CS==1
-        #if USE_CS2==0
+#if USE_CS == 1
+        #if USE_CS2 == 0
         CS_HI;
         #else
-        if (!display_nr) CS_HI;
+        if ( !display_nr ) CS_HI;
         else CS2_HI;
         #endif
 #endif
 
         DC_LO;
 
-#if USE_CS==1
-        #if USE_CS2==0
+#if USE_CS == 1
+        #if USE_CS2 == 0
         CS_LO;
         #else
-        if (!display_nr) CS_LO;
+        if ( !display_nr ) CS_LO;
         else CS2_LO;
         #endif
 #endif
 
-        SPIwrite( cmd);
+        SPIwrite ( cmd);
 
-#if USE_CS==1
-        #if USE_CS2==0
+#if USE_CS == 1
+        #if USE_CS2 == 0
         CS_HI;
         #else
-        if (!display_nr) CS_HI;
+        if ( !display_nr ) CS_HI;
         else CS2_HI;
         #endif
 #endif
 
 #else
 
-        uint8_t control= 0x00;
-
-        TWI_start();
-        TWI_write(OLED_I2C_ADDRESS);
-        TWI_write(control);
-        TWI_write(cmd);
-        TWI_stop();
+        uint8_t control = 0x00;
+        TWI_start ();
+        TWI_write ( OLED_I2C_ADDRESS );
+        TWI_write ( control );
+        TWI_write ( cmd );
+        TWI_stop ();
 
 #endif
 }
 
-void mp_ssd1306_data( uint8_t dat){
+void mp_ssd1306_data ( uint8_t dat ) {
 
-#if USE_SPI_OR_I2C==1
+#if USE_SPI_OR_I2C == 1
 
-#if USE_CS==1
-        #if USE_CS2==0
+#if USE_CS == 1
+        #if USE_CS2 == 0
         CS_HI;
         #else
-        if (!display_nr) CS_HI;
+        if ( !display_nr ) CS_HI;
         else CS2_HI;
         #endif
 #endif
 
         DC_HI;
 
-#if USE_CS==1
-        #if USE_CS2==0
+#if USE_CS == 1
+        #if USE_CS2 == 0
         CS_LO;
         #else
-        if (!display_nr) CS_LO;
+        if ( !display_nr ) CS_LO;
         else CS2_LO;
         #endif
 #endif
 
-        SPIwrite( dat);
+        SPIwrite ( dat );
 
-#if USE_CS==1
-        #if USE_CS2==0
+#if USE_CS == 1
+        #if USE_CS2 == 0
         CS_HI;
         #else
-        if (!display_nr) CS_HI;
+        if ( !display_nr ) CS_HI;
         else CS2_HI;
         #endif
 #endif
 
 #else
-        uint8_t control= 0x40;
-
-        TWI_start();
-        TWI_write(OLED_I2C_ADDRESS);
-        TWI_write(control);
-        TWI_write(dat);
-        TWI_stop();
+        uint8_t control = 0x40;
+        TWI_start ();
+        TWI_write ( OLED_I2C_ADDRESS );
+        TWI_write ( control );
+        TWI_write ( dat );
+        TWI_stop ();
 #endif
 }
 
 
 
-void mp_ssd1306_display(void){
-        mp_ssd1306_cmd(SSD1306_SETLOWCOLUMN | 0x0);
-        mp_ssd1306_cmd(SSD1306_SETHIGHCOLUMN | 0x0);
-        mp_ssd1306_cmd(SSD1306_SETSTARTLINE | 0x0);
+void mp_ssd1306_display ( void ) {
+        mp_ssd1306_cmd ( SSD1306_SETLOWCOLUMN 	| 0x0 );
+        mp_ssd1306_cmd ( SSD1306_SETHIGHCOLUMN 	| 0x0 );
+        mp_ssd1306_cmd ( SSD1306_SETSTARTLINE		| 0x0 );
 
-#if USE_SPI_OR_I2C==1
+#if USE_SPI_OR_I2C == 1
 
-#if USE_CS==1
-        #if USE_CS2==0
+#if USE_CS == 1
+        #if USE_CS2 == 0
         CS_HI;
         #else
-        if (!display_nr) CS_HI;
+        if ( !display_nr ) CS_HI;
         else CS2_HI;
         #endif
 #endif
+
         DC_HI;
 
-#if USE_CS==1
-        #if USE_CS2==0
+#if USE_CS == 1
+        #if USE_CS2 == 0
         CS_LO;
         #else
-        if (!display_nr) CS_LO;
+        if ( !display_nr ) CS_LO;
         else CS2_LO;
         #endif
 #endif
 
-        for (uint16_t i=0; i<BUF_SIZE; i++){
-                SPIwrite(ssd1306_buf[i]);
+        for ( uint16_t i = 0; i < BUF_SIZE; i++ ) {
+                SPIwrite ( ssd1306_buf [i] );
         }
 
-#if USE_CS==1
-        #if USE_CS2==0
+#if USE_CS == 1
+        #if USE_CS2 == 0
         CS_HI;
         #else
-        if (!display_nr) CS_HI;
+        if ( !display_nr ) CS_HI;
         else CS2_HI;
         #endif
 #endif
 
 #else
 
-        TWI_write_buf(OLED_I2C_ADDRESS,0x40,BUF_SIZE,ssd1306_buf);
+        TWI_write_buf ( OLED_I2C_ADDRESS, 0x40, BUF_SIZE, ssd1306_buf );
 
 #endif
 }
 
-void mp_ssd1306_setPixel(int x, int y, uint8_t bw){
-        if ((x<0) || (x>=SSD1306_WIDTH) || (y<0) || (y>=SSD1306_HEIGHT)) return;
-        if (bw) ssd1306_buf[x+(y/8)*SSD1306_WIDTH] |= (1<<(y%8)); //zapal
-        else ssd1306_buf[x+(y/8)*SSD1306_WIDTH] &= ~(1<<(y%8)); // zgas
+void mp_ssd1306_setPixel ( int x, int y, uint8_t bw ) {
+        if (( x<0 ) || ( x>=SSD1306_WIDTH ) || ( y<0 ) || ( y>=SSD1306_HEIGHT ))
+        	return;
+
+        if ( bw ) ssd1306_buf[x+( y/8 )*SSD1306_WIDTH ] |= ( 1<<( y%8 )); //zapal
+        else ssd1306_buf [ x+( y/8 )*SSD1306_WIDTH ] &= ~ ( 1<<(y%8 )); // zgas
 }
 
-void mp_ssd1306_cls(void){
-        memset(ssd1306_buf, 0x00, (BUF_SIZE));
+void mp_ssd1306_cls ( void ) {
+        memset ( ssd1306_buf, 0x00, ( BUF_SIZE ));
 }
 
-void mp_ssd1306_init( uint8_t vcc, uint8_t refresh, uint8_t rst_disable){
+void mp_ssd1306_init ( uint8_t vcc, uint8_t refresh, uint8_t rst_disable ) {
 
-#if USE_SPI_OR_I2C==1
-        ssd1306_InitSpi();
+#if USE_SPI_OR_I2C == 1
+        ssd1306_InitSpi ();
 
-if (!rst_disable){
-        #if USE_RST==1
+if ( !rst_disable ) {
+        #if USE_RST == 1
                 RST_HI;
-                _delay_ms(25);
+                _delay_ms ( 25 );
                 RST_LO;
-                _delay_ms(25);
+                _delay_ms ( 25 );
                 RST_HI;
         #else
-                //CS_HI;
-                //_delay_ms(25);
-                //CS_LO;
-                //_delay_ms(25);
-                //CS_HI;
+                CS_HI;
+                _delay_ms ( 25 );
+                CS_LO;
+                _delay_ms ( 25 );
+                CS_HI;
         #endif
 }
 #else
-        i2cSetBitrate(400);
-        I2C_DIR |= (1<< SCL)|(1<<SDA);
-        _delay_ms(50);
-
+        i2cSetBitrate ( 400 );
+        I2C_DIR |= ( 1<< SCL ) | ( 1<<SDA );
+        _delay_ms ( 50 );
 #endif
 
-        mp_ssd1306_cmd(SSD1306_DISPLAYOFF);             //0xAE
-        mp_ssd1306_cmd(SSD1306_SETDISPLAYCLOCKDIV);     // 0xD5
-        //mp_ssd1306_cmd(0x80);                                         // the suggested ratio 0x80 dolozone
-        mp_ssd1306_cmd(refresh);
+        mp_ssd1306_cmd ( SSD1306_DISPLAYOFF );										//0xAE
+        mp_ssd1306_cmd ( SSD1306_SETDISPLAYCLOCKDIV );							// 0xD5
+        mp_ssd1306_cmd ( refresh);
 
-        mp_ssd1306_cmd(SSD1306_SETMULTIPLEX);           // 0xA8 dolozone
-        mp_ssd1306_cmd(0x3F);                                           //dolozone
+        mp_ssd1306_cmd ( SSD1306_SETMULTIPLEX );									// 0xA8
+        mp_ssd1306_cmd ( 0x3F );
 
-        mp_ssd1306_cmd(SSD1306_SETDISPLAYOFFSET);       // 0xD3
-        mp_ssd1306_cmd(0x0);                                            // no offset
-        mp_ssd1306_cmd(SSD1306_SETSTARTLINE | 0x0);     // line #0
-        mp_ssd1306_cmd(SSD1306_CHARGEPUMP);             // 0x8D
+        mp_ssd1306_cmd ( SSD1306_SETDISPLAYOFFSET );							// 0xD3
+        mp_ssd1306_cmd ( 0x0 );																	// no offset
+        mp_ssd1306_cmd ( SSD1306_SETSTARTLINE | 0x0 );							// line #0
+        mp_ssd1306_cmd ( SSD1306_CHARGEPUMP );										// 0x8D
 
-        if (vcc== SSD1306_EXTERNALVCC)  mp_ssd1306_cmd(0x10);
-        else    mp_ssd1306_cmd(0x14);
+        if (vcc== SSD1306_EXTERNALVCC)  mp_ssd1306_cmd ( 0x10 );
+        else    mp_ssd1306_cmd ( 0x14 );
 
-        mp_ssd1306_cmd(SSD1306_MEMORYMODE);             // 0x20
-        mp_ssd1306_cmd(0x00);                                           // 0x0 act like ks0108
-        mp_ssd1306_cmd(SSD1306_SEGREMAP | 0x1);
-        mp_ssd1306_cmd(SSD1306_COMSCANDEC);
+        mp_ssd1306_cmd ( SSD1306_MEMORYMODE );									// 0x20
+        mp_ssd1306_cmd  ( 0x00 );																// 0x0 act like ks0108
+        mp_ssd1306_cmd ( SSD1306_SEGREMAP | 0x1 );
+        mp_ssd1306_cmd ( SSD1306_COMSCANDEC );
 
-        mp_ssd1306_cmd(SSD1306_SETCOMPINS);             // 0xDA BRAKOWALO
-        mp_ssd1306_cmd(0x12);                                           //BRAKOWALO
-        mp_ssd1306_cmd(SSD1306_SETCONTRAST);            //0x81
+        mp_ssd1306_cmd ( SSD1306_SETCOMPINS );										 // 0xDA BRAKOWALO
+        mp_ssd1306_cmd ( 0x12 );
+        mp_ssd1306_cmd ( SSD1306_SETCONTRAST );									//0x81
 
-        if (vcc== SSD1306_EXTERNALVCC)  mp_ssd1306_cmd(0x9F);
-        else    mp_ssd1306_cmd(0xCF);
+        if (vcc== SSD1306_EXTERNALVCC)  mp_ssd1306_cmd ( 0x9F );
+        else    mp_ssd1306_cmd ( 0xCF );
 
-        mp_ssd1306_cmd(SSD1306_SETPRECHARGE);           // 0xd9
+        mp_ssd1306_cmd(SSD1306_SETPRECHARGE);										// 0xd9
 
-        if (vcc == SSD1306_EXTERNALVCC)
-              { mp_ssd1306_cmd(0x22); }                         //BRAKUJE
-        else
-              { mp_ssd1306_cmd(0xF1); }                         //BRAKUJE
-        //dla 128 x 32
+        if (vcc == SSD1306_EXTERNALVCC) mp_ssd1306_cmd ( 0x22 );
+        else mp_ssd1306_cmd ( 0xF1 );
+
 #if defined SSD1306_128_32
 
-        mp_ssd1306_cmd(SSD1306_SETMULTIPLEX);
-        mp_ssd1306_cmd(0x1F);
+        mp_ssd1306_cmd ( SSD1306_SETMULTIPLEX );
+        mp_ssd1306_cmd ( 0x1F );
 
-        mp_ssd1306_cmd(SSD1306_SETCOMPINS);
-        mp_ssd1306_cmd(0x02);
+        mp_ssd1306_cmd ( SSD1306_SETCOMPINS );
+        mp_ssd1306_cmd ( 0x02 );
 #endif
         //dla 128 x 64
 #if defined SSD1306_128_64
 
-        mp_ssd1306_cmd(SSD1306_SETMULTIPLEX);
-        mp_ssd1306_cmd(0x3F);
+        mp_ssd1306_cmd ( SSD1306_SETMULTIPLEX );
+        mp_ssd1306_cmd ( 0x3F );
 
-        mp_ssd1306_cmd(SSD1306_SETCOMPINS);
-        mp_ssd1306_cmd(0x12);
+        mp_ssd1306_cmd ( SSD1306_SETCOMPINS );
+        mp_ssd1306_cmd ( 0x12 );
 #endif
 
-    mp_ssd1306_cmd(SSD1306_SETVCOMDETECT);       // 0xDB brakuje
-        mp_ssd1306_cmd(0x40);                                           //BRAKUJE, nie jest ponoc istotne, bo przyjmuje wartosci domyslne po resecie
+        mp_ssd1306_cmd ( SSD1306_SETVCOMDETECT ); 								// 0xDB
+        mp_ssd1306_cmd ( 0x40 );
 
-        mp_ssd1306_cmd(SSD1306_DISPLAYALLON_RESUME);// 0xA4
-        mp_ssd1306_cmd(SSD1306_NORMALDISPLAY);          // 0xA6
+        mp_ssd1306_cmd ( SSD1306_DISPLAYALLON_RESUME );						// 0xA4
+        mp_ssd1306_cmd ( SSD1306_NORMALDISPLAY );									// 0xA6
 
-        mp_ssd1306_cmd(SSD1306_DISPLAYON);
+        mp_ssd1306_cmd ( SSD1306_DISPLAYON );
 
-        mp_ssd1306_display();
+        mp_ssd1306_display ();
 }
 
-void mp_ssd1306_drawBitmap_P(int x, int y, const uint8_t *bitmap, uint8_t w, uint8_t h, uint8_t color){
-        int i, j, byteWidth= (w+7)/8;
-        for (j=0; j<h; j++){
-                for (i=0; i<w; i++){
-                        if (pgm_read_byte(bitmap + j*byteWidth + i/8)& (128>>(i&7))){
-                                mp_ssd1306_setPixel(x+i, y+j, color);
+void mp_ssd1306_drawBitmap_P (int x, int y, const uint8_t *bitmap, uint8_t w, uint8_t h, uint8_t color ) {
+        int i, j, byteWidth = ( w+7 ) / 8;
+        for ( j=0; j<h; j++ ) {
+                for ( i=0; i<w; i++ ) {
+                        if ( pgm_read_byte( bitmap + j*byteWidth + i / 8 ) & ( 128>>( i & 7 ))) {
+                                mp_ssd1306_setPixel ( x+i, y+j, color );
                         }
                 }
         }
