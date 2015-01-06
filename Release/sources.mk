@@ -23,5 +23,6 @@ C_DEPS :=
 SUBDIRS := \
 . \
 MP_SSD1306 \
+MP_SSD1306/FONT \
 1Wire \
 

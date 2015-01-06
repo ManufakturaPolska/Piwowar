@@ -257,7 +257,9 @@ void mp_ssd1306_display ( void ) {
 #endif
 }
 
-void mp_ssd1306_setPixel ( int x, int y, uint8_t bw ) {
+
+
+void mp_ssd1306_drawPixel ( int x, int y, uint8_t bw ) {
         if (( x<0 ) || ( x>=SSD1306_WIDTH ) || ( y<0 ) || ( y>=SSD1306_HEIGHT ))
         	return;
 
@@ -281,13 +283,7 @@ if ( !rst_disable ) {
                 RST_LO;
                 _delay_ms ( 25 );
                 RST_HI;
-        #else
-                CS_HI;
-                _delay_ms ( 25 );
-                CS_LO;
-                _delay_ms ( 25 );
-                CS_HI;
-        #endif
+#endif
 }
 #else
         i2cSetBitrate ( 400 );
@@ -356,32 +352,34 @@ if ( !rst_disable ) {
         mp_ssd1306_display ();
 }
 
-void mp_ssd1306_drawBitmap_P (int x, int y, const uint8_t *bitmap, uint8_t w, uint8_t h, uint8_t color ) {
-        int i, j, byteWidth = ( w+7 ) / 8;
-        for ( j=0; j<h; j++ ) {
-                for ( i=0; i<w; i++ ) {
-                        if ( pgm_read_byte( bitmap + j*byteWidth + i / 8 ) & ( 128>>( i & 7 ))) {
-                                mp_ssd1306_setPixel ( x+i, y+j, color );
-                        }
-                }
-        }
-}
-/*
-void oled_write_data(int x, int y, uint8_t *c){
-        uint8_t i, m=0x80;
-        for (i=0; i<8; i++){
-                if ((*c)&m) mp_ssd1306_setPixel(x+i,y,1);
-                else  mp_ssd1306_setPixel(x+i,y,0);
-                m>>= 1;
-        }
+void mp_ssd1306_refresh_pages ( uint8_t page_nr, uint8_t pages_cnt, uint8_t col_start, uint8_t col_end ) {
+
+	uint8_t  page_cnt, col_cnt;
+	uint8_t * ram_buf_start;
+
+	for ( page_cnt = page_nr; page_cnt < ( page_nr + pages_cnt); page_cnt ++) {
+
+		mp_ssd1306_cmd ( SSD1306_SETLOWCOLUMN | ( col_start & 0X0f) );
+		mp_ssd1306_cmd ( SSD1306_SETHIGHCOLUMN | col_start >> 4 );
+		mp_ssd1306_cmd ( 0xB0 + pages_cnt );
+
+		ram_buf_start = &ssd1306_buf [ ( page_cnt * 128 ) + col_start ];
+
+		DC_HI ;
+
+		#if USE_CS == 1
+			#if USE_CS2 == 0
+			CS_LO;
+			#else
+			if ( !display_nr ) CS_LO;
+			else CS2_LO;
+			#endif
+		#endif
+
+		for ( page_cnt = col_start; page_cnt < col_end; col_cnt ++) {
+			SPIwrite ( *ram_buf_start ++);
+		}
+
+	}
 
 }
-
-void oled_defchar(int x, int y, uint8_t *def_znak){
-        register uint8_t i,c;
-        for (i=0; i<8; i++){
-                c= *(def_znak++);
-                oled_write_data(x, y+i, c);
-        }
-}
-*/

@@ -68,7 +68,7 @@ void mp_rinse (uint8_t time_rinse) {
 		if (tr > 0) {
 			WVALVE_ON;
 			_delay_ms (1000);
-			mp_ssd1306_drawBitmap_P (48, 48, rinse, 16, 16, 1);
+			mp_wysBitmap_P (48, 48, rinse, 16, 16, 1);
 			mp_ssd1306_display ();
 
 			tr --;} 			//w³¹cz przep³ukiwanie
