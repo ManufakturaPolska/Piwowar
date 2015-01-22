@@ -48,9 +48,34 @@
 int main(void){
 
 		mp_ssd1306_init(SSD1306_SWITCHCAPVCC, REFRESH_MAX, 0);
-//	mp_ssd1306_cmd(0x81);	//kontrast na min
-//	mp_ssd1306_cmd(0);
-		mp_ssd1306_display();
+	mp_ssd1306_cmd (0x81);	//kontrast na min
+	mp_ssd1306_cmd (0);
+
+	// mp_narZnak (20,20, , 1, 0, 4 ); do poprawy
+	// mp_wysText ( 20, 20, "Ania", 2, 0, 1 ) ;
+	// mp_wysLiczbe ( 20, 20, 15, 3, 1, 0);
+//	mp_narProst ( 20, 20, 20, 40, 1 );
+//	mp_wypProst ( 20, 20, 16, 36, 1);
+//	mp_narProstOkrag ( 20, 20, 30, 30, 3, 1);
+//	mp_wypProstOkrag ( 20, 20, 30, 30, 5, 1 ); // do poprawy
+//	mp_narLiniePoz (20, 20, 30, 1 );
+//	mp_narLiniePion (20, 20, 30, 1);
+//	mp_narLinieDow ( 20, 20, 10, 40, 1 );
+//	mp_narOkrag ( 20, 20, 30, 1 ); // do poprawy
+//	mp_wypOkrag ( 20, 20, 30, 1 ) ; // do poprawy
+//	mp_narTrojkat (10, 60, 50, 10, 60, 60, 1 );
+//	mp_ssd1306_display ();
+//	_delay_ms(1000);
+//	mp_narTrojkat (10, 60, 50, 10, 60, 60, 0 );
+//	mp_mrugajEkran ( 1 ) ;
+//	mp_ssd1306_display ();
+//_delay_ms(1000);
+//	mp_mrugajEkran (0 ) ;
+//	mp_narTrojkat (10, 60, 50, 10, 60, 60, 1 );
+//
+//	 mp_wysText ( 10, 20, "Ania", 2, 0, 1 ) ;
+//	 mp_startPrzewPrawo ( 1, 7 );
+//	mp_ssd1306_display ();
 
 
 //	mp_rinse (90);

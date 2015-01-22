@@ -108,12 +108,12 @@ void mp_narZnak (int x, int y, char c, uint8_t color, uint8_t bg, uint8_t size )
 	  }
 }
 
-void mp_narLiniePoz ( int x, int y, int h, uint8_t color ) {
+void mp_narLiniePion ( int x, int y, int h, uint8_t color ) {
 	mp_narLinieDow ( x, y, x, y + h - 1, color );
 
 }
 
-void mp_narLiniePion ( int x, int y, int w, uint8_t color) {
+void mp_narLiniePoz ( int x, int y, int w, uint8_t color) {
   // Update in subclasses if desired!
 	mp_narLinieDow ( x, y, x+w-1, y, color );
 }
